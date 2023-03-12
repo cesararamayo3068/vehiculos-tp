@@ -12,9 +12,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "CLIENTES")
+@Table(name = "clientes")
 public class Cliente {
 	
 	@Id
@@ -28,16 +30,18 @@ public class Cliente {
 	private String apellido;
 	
 	@Column(name = "fecha_de_nacimiento" ,length = 15)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date fechaDeNacimiento;
 
 	@Column(name = "numero_de_identficacion" ,length = 10)
 	private Integer numeroDeidentificacion;
 	
 	@Column(name = "fecha_venc_doc_identidad" ,length = 15)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
 	private Date fechaVencDocIdentidad;
 	
 	@Column(name = "numero_telefonico" ,length = 20)

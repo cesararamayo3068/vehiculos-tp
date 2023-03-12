@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "CARROS")
+@Table(name = "carros")
 public class Carro {
 
 	@Id
@@ -24,7 +24,7 @@ public class Carro {
 	@Column(name = "modelo" ,length = 30)
 	private String modelo;
 
-	@Column(name = "año" ,length = 4)
+	@Column(name = "año" ,length = 5)
 	private Integer anio;
 
 	@Column(name = "color" ,length = 15)
@@ -50,6 +50,7 @@ public class Carro {
 	private Integer kilometraje;
 
 	@Column(name = "aire_acondicionado" ,length = 3)
+	@Enumerated(EnumType.STRING)
 	private AireAcondicionado aireAcondicionado;
 
 	public enum AireAcondicionado {
@@ -59,7 +60,7 @@ public class Carro {
 	@Column(name = "valor_por_dia" ,length = 4)
 	private Integer valorPorDia;
 	
-	@Column(name = "contrato" ,length = 4)
+	@Column(name = "contrato" ,length = 5)
 	//@Pattern(regexp = "[6][0-9]{8}", message = "debe tener 4 digitos como maximo")
 	private Integer contrato;
 
