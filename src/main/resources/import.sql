@@ -1,3 +1,3 @@
-INSERT INTO carros(marca, modelo, año, color, tipo, placa, cantidad_de_pasajeros, kilometraje, aire_acondicionado, valor_por_dia, contrato) 
-         VALUES ('Renault', 'Captur', 2017, 'Azul Celeste', 'CAMIONETA', 'ABC123', 5, 1350, 'SI', 30, 2345);
-
+INSERT INTO carros(marca, modelo, anio, color, tipo, placa, cantidad_de_pasajeros, kilometraje, aire_acondicionado, valor_por_dia, contrato) VALUES('Renault', 'Captur', 2017, 'Azul Celeste', 'CAMIONETA', 'ABC123', 5, 1350, 'SI', 30, 2345);
+INSERT INTO carros(marca, modelo, anio, color, tipo, placa, cantidad_de_pasajeros, kilometraje, aire_acondicionado, valor_por_dia, contrato) VALUES('Ford', 'Fiesta', 2016, 'Rojo', 'SUV', 'DEF345', 4, 3456, 'NO', 49, 2367);
+INSERT INTO carros(marca, modelo, anio, color, tipo, placa, cantidad_de_pasajeros, kilometraje, aire_acondicionado, valor_por_dia, contrato) VALUES('Chevrolet', 'Corsa', 2014, 'Blanco', 'SEDAN', 'AWS345', 4, 5678, 'SI', 33, 3367);

@@ -24,7 +24,7 @@ public class Carro {
 	@Column(name = "modelo" ,length = 30)
 	private String modelo;
 
-	@Column(name = "año" ,length = 5)
+	@Column(name = "anio" ,length = 5)
 	private Integer anio;
 
 	@Column(name = "color" ,length = 15)
@@ -160,16 +160,5 @@ public class Carro {
 	public void setContrato(Integer contrato) {
 		this.contrato = contrato;
 	}
-
-	@Override
-	public String toString() {
-		return "Carro [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", anio=" + anio + ", color=" + color
-				+ ", tipo=" + tipo + ", placa=" + placa + ", cantidadDePasajeros=" + cantidadDePasajeros
-				+ ", kilometraje=" + kilometraje + ", aireAcondicionado=" + aireAcondicionado + ", valorPorDia="
-				+ valorPorDia + ", contrato=" + contrato + "]";
-	}
-
-	
-     
 
 }

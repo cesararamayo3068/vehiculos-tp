@@ -26,22 +26,19 @@ public class CarroRestController {
 	@Autowired
 	private ICarroService carroService;
 	
-	@Autowired
-	private CarroRepository carroRepository;
-
 	@PostMapping("/carro")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Carro saveLibro(@RequestBody Carro carro) {
+	public Carro saveCarro(@RequestBody Carro carro) {
 
-		carroRepository.save(carro);
+	
 
-		return carro;
+		return carroService.save(carro);
 	}
 
 	@PatchMapping("/carro/{placa}")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK) 
 	public Carro update(@RequestBody Carro carro, @PathVariable String placa) {
-		Carro carroActual = carroRepository.findByPlaca(placa);
+		Carro carroActual = carroService.buscarPorPlaca(placa);
 		carroActual.setPlaca(carro.getPlaca());
 		carroActual.setMarca(carro.getMarca());
 		carroActual.setModelo(carro.getModelo());
@@ -53,26 +50,30 @@ public class CarroRestController {
 		carroActual.setAireAcondicionado(carro.getAireAcondicionado());
 		carroActual.setValorPorDia(carro.getValorPorDia());
 
-		return carroRepository.save(carroActual);
+		return carroService.save(carroActual);
 	}
 
 	@GetMapping("/carro/{placa}")
 	@ResponseStatus(HttpStatus.OK)
 	public Carro show(@PathVariable String placa) {
-		return carroRepository.findByPlaca(placa);
+		
+		
+		return carroService.buscarPorPlaca(placa);
 	}
 
 	@GetMapping("/carro")
 	public List<Carro> getAllcarros() {
-		//List<Carro> carros = carroRepository.findAll();
-
+	
 		return carroService.findAll();
 	}
 
 	@DeleteMapping("/carro/{placa}")
-	@ResponseStatus(HttpStatus.OK)
-	public void delete(@RequestBody String placa) {
-		Carro carroEncontrado = carroRepository.findByPlaca(placa);
-		carroRepository.delete(carroEncontrado);
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable String placa){
+		
+		carroService.deleteporPlaca(placa);
 	}
+	
+	
+	
 }
