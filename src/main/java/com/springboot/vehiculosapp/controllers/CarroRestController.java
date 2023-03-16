@@ -36,32 +36,50 @@ public class CarroRestController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			carroNuevo = carroService.save(carro);
-		}catch (DataAccessException e) {
+		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		response.put("mensaje", "El Carro fue creado con éxito!");
 		response.put("carro", carroNuevo);
-		return new ResponseEntity<Map<String, Object>> (response,HttpStatus.CREATED);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/carro/{placa}")
-	@ResponseStatus(HttpStatus.OK)
-	public Carro update(@RequestBody Carro carro, @PathVariable String placa) {
+	public ResponseEntity<?> update(@RequestBody Carro carro, @PathVariable String placa) {
 		Carro carroActual = carroService.buscarPorPlaca(placa);
-		carroActual.setPlaca(carro.getPlaca());
-		carroActual.setMarca(carro.getMarca());
-		carroActual.setModelo(carro.getModelo());
-		carroActual.setAnio(carro.getAnio());
-		carroActual.setColor(carro.getColor());
-		carroActual.setTipo(carro.getTipo());
-		carroActual.setCantidadDePasajeros(carro.getCantidadDePasajeros());
-		carroActual.setKilometraje(carro.getKilometraje());
-		carroActual.setAireAcondicionado(carro.getAireAcondicionado());
-		carroActual.setValorPorDia(carro.getValorPorDia());
+		Carro carroUpdated = null;
+		Map<String, Object> response = new HashMap<>();
 
-		return carroService.save(carroActual);
+		if (carroActual == null) {
+			response.put("mensaje", "Error:no se puede editar,el carro Placa:"
+					.concat(placa.toString().concat(" no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		try {
+			carroActual.setPlaca(carro.getPlaca());
+			carroActual.setMarca(carro.getMarca());
+			carroActual.setModelo(carro.getModelo());
+			carroActual.setAnio(carro.getAnio());
+			carroActual.setColor(carro.getColor());
+			carroActual.setTipo(carro.getTipo());
+			carroActual.setCantidadDePasajeros(carro.getCantidadDePasajeros());
+			carroActual.setKilometraje(carro.getKilometraje());
+			carroActual.setAireAcondicionado(carro.getAireAcondicionado());
+			carroActual.setValorPorDia(carro.getValorPorDia());
+
+			carroUpdated = carroService.save(carroActual);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar el carro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "El Carro fue actualizado con éxito!");
+		response.put("carro", carroUpdated);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/carro/{placa}")
@@ -81,7 +99,8 @@ public class CarroRestController {
 		}
 
 		if (carro == null) {
-			response.put("mensaje", "El carro ID:".concat(placa.toString().concat(" no existe en la base de datos!")));
+			response.put("mensaje",
+					"El carro Placa:".concat(placa.toString().concat(" no existe en la base de datos!")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
