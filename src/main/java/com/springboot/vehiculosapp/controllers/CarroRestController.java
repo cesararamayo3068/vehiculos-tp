@@ -31,10 +31,19 @@ public class CarroRestController {
 	private ICarroService carroService;
 
 	@PostMapping("/carro")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Carro saveCarro(@RequestBody Carro carro) {
-
-		return carroService.save(carro);
+	public ResponseEntity<?> saveCarro(@RequestBody Carro carro) {
+		Carro carroNuevo = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			carroNuevo = carroService.save(carro);
+		}catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El Carro fue creado con éxito!");
+		response.put("carro", carroNuevo);
+		return new ResponseEntity<Map<String, Object>> (response,HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/carro/{placa}")
