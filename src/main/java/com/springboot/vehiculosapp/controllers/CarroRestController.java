@@ -99,8 +99,7 @@ public class CarroRestController {
 		}
 
 		if (carro == null) {
-			response.put("mensaje",
-					"El carro Placa:".concat(placa.toString().concat(" no existe en la base de datos!")));
+			response.put("mensaje","El carro Placa:".concat(placa.toString().concat(" no existe en la base de datos!")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
@@ -114,10 +113,22 @@ public class CarroRestController {
 	}
 
 	@DeleteMapping("/carro/{placa}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable String placa) {
 
-		carroService.deleteporPlaca(placa);
+	public ResponseEntity<?> delete(@PathVariable String placa) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			carroService.deleteporPlaca(placa);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al eliminar el carro en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+
+		response.put("mensaje", "El Carro fue eliminado con éxito!");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
 }
