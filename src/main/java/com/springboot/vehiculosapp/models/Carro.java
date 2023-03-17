@@ -1,5 +1,7 @@
 package com.springboot.vehiculosapp.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,8 +9,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
+
 
 @Entity
 @Table(name = "carros")
@@ -64,7 +67,17 @@ public class Carro {
 	//@Pattern(regexp = "[6][0-9]{8}", message = "debe tener 4 digitos como maximo")
 	private Integer contrato;
 
+	@ManyToMany(mappedBy="carros")
+	private List<Contrato> contratos;
 	
+	public List<Contrato> getContratos() {
+		return contratos;
+	}
+
+	public void setContratos(List<Contrato> contratos) {
+		this.contratos = contratos;
+	}
+
 	public Long getId() {
 		return id;
 	}

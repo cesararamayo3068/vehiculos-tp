@@ -1,6 +1,7 @@
 package com.springboot.vehiculosapp.models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +24,8 @@ public class Contrato {
 	private Long id;
 
 	@Column(name = "numero_de_contrato", length = 4)
-	// @Pattern(regexp = "[6][0-9]{8}", message = "debe tener 4 digitos como maximo")
+	// @Pattern(regexp = "[6][0-9]{8}", message = "debe tener 4 digitos como
+	// maximo")
 	private Integer numeroDeContrato;
 
 	@Column(name = "fecha_de_inicio", length = 15)
@@ -53,6 +56,17 @@ public class Contrato {
 
 	@Column(name = "saldo_total", length = 10)
 	private Integer saldoTotal;
+
+	@ManyToMany
+	private List<Carro> carros;
+
+	public List<Carro> getCarros() {
+		return carros;
+	}
+
+	public void setCarros(List<Carro> carros) {
+		this.carros = carros;
+	}
 
 	public Long getId() {
 		return id;
@@ -150,7 +164,5 @@ public class Contrato {
 				+ ", valorRestante=" + valorRestante + ", diasDeMora=" + diasDeMora + ", saldoEnMora=" + saldoEnMora
 				+ ", saldoTotal=" + saldoTotal + "]";
 	}
-	
-	
 
 }
